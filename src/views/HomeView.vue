@@ -1,9 +1,7 @@
 <template>
-  <DefaultLayout>
-    <h1>Trang chủ</h1>
-  </DefaultLayout>
+  <Header />
 </template>
 
 <script setup lang="ts">
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import Header from '@/components/layout/Header.vue'
 </script>
