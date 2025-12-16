@@ -1,25 +1,32 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@/pages/HomePage.vue'),
-  },
-  {
-    path: '/projects',
-    name: 'projects',
-    component: () => import('@/pages/ProjectsPage.vue'),
-  },
-  {
-    path: '/projects/:id',
-    name: 'project-detail',
-    component: () => import('@/pages/ProjectDetailPage.vue'),
-  },
-  {
-    path: '/news',
-    name: 'news',
-    component: () => import('@/pages/NewsPage.vue'),
+    component: DefaultLayout,
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: () => import('@/pages/HomePage.vue'),
+      },
+      {
+        path: 'projects',
+        name: 'projects',
+        component: () => import('@/pages/ProjectsPage.vue'),
+      },
+      {
+        path: 'projects/:id',
+        name: 'project-detail',
+        component: () => import('@/pages/ProjectDetailPage.vue'),
+      },
+      {
+        path: 'news',
+        name: 'news',
+        component: () => import('@/pages/NewsPage.vue'),
+      },
+    ],
   },
 ]
 

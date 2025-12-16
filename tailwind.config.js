@@ -2,15 +2,10 @@
 export default {
     content: [
         './index.html',
-        './src/**/*.{vue,ts}'
+        './src/**/*.{vue,js,ts,jsx,tsx}',
     ],
     theme: {
-        extend: {
-            colors: {
-                primary: '#c49a6c', // màu BĐS giống noxhtrungthai
-                dark: '#1f2937'
-            }
-        },
+        extend: {},
     },
     plugins: [],
 }

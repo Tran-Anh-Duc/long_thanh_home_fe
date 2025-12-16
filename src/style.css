@@ -1,3 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* RESET BỔ SUNG */
+@layer base {
+    body {
+        @apply font-sans text-gray-800;
+    }
+
+    a {
+        @apply no-underline text-gray-800;
+    }
+}
