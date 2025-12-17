@@ -2,9 +2,9 @@
   <div class="flex min-h-screen flex-col">
     <Header />
 
-<!--    <main class="flex-1">-->
-<!--      <router-view />-->
-<!--    </main>-->
+    <main class="flex-1">
+      <router-view />
+    </main>
 
     <Footer />
   </div>
