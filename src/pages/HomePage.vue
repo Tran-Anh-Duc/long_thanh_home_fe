@@ -1,10 +1,9 @@
 <template>
   <HeroSlider />
   <CoreValuesSection />
-  <HeroSection />
-  <FeaturedProjects />
-  <RegionsSection />
-  <CTASection />
+  <FeaturedProjectsSection />
+<!--  <RegionsSection />-->
+<!--  <CTASection />-->
 </template>
 
 <script setup lang="ts">
@@ -14,4 +13,5 @@ import RegionsSection from '@/sections/home/RegionsSection.vue'
 import CTASection from '@/sections/home/CTASection.vue'
 import HeroSlider from '@/sections/home/HeroSlider.vue'
 import CoreValuesSection from '@/sections/home/CoreValuesSection.vue'
+import FeaturedProjectsSection from '@/sections/home/FeaturedProjectsSection.vue'
 </script>
