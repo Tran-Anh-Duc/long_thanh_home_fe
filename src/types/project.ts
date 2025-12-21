@@ -1,7 +1,9 @@
 export interface Project {
     id: number
-    name: string
-    location: string
-    thumbnail: string
-    price?: string
+    title: string
+    slug: string
+    location?: string
+    price_from?: number
+    is_active: boolean
+    created_at: string
 }
