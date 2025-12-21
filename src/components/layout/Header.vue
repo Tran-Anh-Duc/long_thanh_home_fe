@@ -1,61 +1,106 @@
-<template>
-  <header class="w-full bg-white border-b">
-    <div class="mx-auto max-w-7xl px-6">
-      <div class="flex h-20 items-center justify-between">
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
 
-        <!-- LOGO -->
-        <!-- LOGO -->
-        <div class="flex items-center gap-3">
+const scrolled = ref(false)
+
+const onScroll = () => {
+  scrolled.value = window.scrollY > 10
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', onScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+})
+</script>
+
+<template>
+  <header
+      :class="[
+      'sticky top-0 z-50 bg-white transition-all duration-300',
+      scrolled ? 'shadow-sm' : ''
+    ]"
+  >
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex h-16 items-center justify-between">
+        <!-- LOGO + BRAND -->
+        <div
+            class="group flex items-center gap-3 cursor-pointer
+                 transition-transform duration-300
+                 hover:-translate-y-0.5"
+        >
           <img
-              src="/logo.png"
+              src="/images/logo.png"
               alt="Long Thanh Home"
-              class="h-12 w-auto object-contain"
+              class="h-10 w-auto transition-transform duration-300
+                   group-hover:scale-105"
           />
-          <span class="text-lg font-semibold text-gray-900">
+
+          <div
+              class="text-base font-semibold text-gray-900
+                   tracking-wide
+                   transition-colors duration-300
+                   group-hover:text-green-700"
+          >
             Long Thanh Home
-          </span>
+          </div>
         </div>
 
         <!-- MENU -->
-        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
-          <a href="/" class="hover:text-green-700">Trang chủ</a>
-          <a href="/gioi-thieu" class="hover:text-green-700">Giới thiệu</a>
-          <a href="/dich-vu" class="hover:text-green-700">Dịch vụ</a>
-          <a href="/du-an" class="hover:text-green-700">Dự án</a>
-          <a href="/tin-tuc" class="hover:text-green-700">Tin tức</a>
-          <a href="/lien-he" class="hover:text-green-700">Liên hệ</a>
+        <nav class="hidden md:flex items-center gap-8">
+          <!-- Active -->
+          <a
+              href="#"
+              class="relative text-sm font-medium text-green-700
+                   after:absolute after:left-0 after:-bottom-1
+                   after:h-[2px] after:w-full after:bg-green-600"
+          >
+            Trang chủ
+          </a>
+
+          <!-- Normal -->
+          <a
+              v-for="item in ['Giới thiệu','Dịch vụ','Dự án','Tin tức','Liên hệ']"
+              :key="item"
+              href="#"
+              class="relative text-sm font-medium text-gray-700
+                   transition-all duration-200
+                   hover:text-green-700
+                   after:absolute after:left-0 after:-bottom-1
+                   after:h-[2px] after:w-0 after:bg-green-600
+                   after:transition-all after:duration-300
+                   hover:after:w-full"
+          >
+            {{ item }}
+          </a>
         </nav>
 
-        <!-- ACTION -->
-        <div class="flex items-center gap-3">
-          <!-- Search icon kiểu ảnh mẫu -->
-          <button
-              class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition"
+        <!-- CTA -->
+        <div class="flex items-center gap-4">
+          <a
+              href="#contact"
+              class="hidden md:inline-flex items-center
+                   rounded-full bg-green-600
+                   px-5 py-2 text-sm font-semibold text-white
+                   transition-all duration-300
+                   hover:bg-green-700
+                   hover:-translate-y-0.5
+                   hover:shadow-md"
           >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.8"
-                stroke="currentColor"
-                class="h-5 w-5 text-gray-600"
-            >
-              <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m21 21-4.35-4.35m1.6-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"
-              />
-            </svg>
-          </button>
+            Nhận tư vấn
+          </a>
 
-          <!-- Menu mobile -->
+          <!-- Mobile -->
           <button
-              class="flex h-10 w-10 items-center justify-center rounded-full border text-gray-600 hover:bg-gray-100 md:hidden"
+              class="md:hidden text-gray-700 text-xl
+                   transition-transform duration-200
+                   hover:scale-110"
           >
             ☰
           </button>
         </div>
-
       </div>
     </div>
   </header>
