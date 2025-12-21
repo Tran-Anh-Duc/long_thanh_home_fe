@@ -1,11 +1,9 @@
 import request from './request'
+import type { Project } from '@/types/project'
 
-
-export function getProjects(params?: {
-    page?: number
-    per_page?: number
-}) {
-    return request.get('/projects', { params })
+export const getProjects = async (): Promise<Project[]> => {
+    const res = await request.get('/projects')
+    return res.data.data
 }
 
 export function getProject(id: number | string) {

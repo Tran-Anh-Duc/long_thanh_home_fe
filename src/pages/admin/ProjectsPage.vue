@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { getProjects, deleteProject } from '@/api/project.api'
 import type { Project } from '@/types/project'
 import { useAuthStore } from '@/stores/auth.store'
-import { useRouter } from 'vue-router'
 
 const auth = useAuthStore()
 const router = useRouter()
 
-const loading = ref(false)
+const loading = ref<boolean>(false)
 const projects = ref<Project[]>([])
 
 async function fetchProjects() {
   loading.value = true
   try {
-    const res = await getProjects()
-    projects.value = res.data.data ?? res.data // tuỳ BE paginate hay không
+    projects.value = await getProjects()
   } finally {
     loading.value = false
   }
@@ -32,10 +31,6 @@ onMounted(fetchProjects)
 </script>
 
 <template>
-<!--  <div class="mb-4 text-sm text-red-600">-->
-<!--    Debug permission project.update:-->
-<!--    {{ auth.hasPermission('project.update') }}-->
-<!--  </div>-->
   <div>
     <!-- HEADER -->
     <div class="mb-6 flex items-center justify-between">
@@ -81,15 +76,22 @@ onMounted(fetchProjects)
             class="hover:bg-gray-50"
         >
           <td class="border px-4 py-2">{{ index + 1 }}</td>
+
           <td class="border px-4 py-2 font-medium">
             {{ project.title }}
           </td>
+
           <td class="border px-4 py-2">
             {{ project.location || '-' }}
           </td>
+
           <td class="border px-4 py-2">
-            {{ project.price_from ? project.price_from.toLocaleString() : '-' }}
+              <span v-if="project.price_from">
+                {{ project.price_from.toLocaleString('vi-VN') }} đ
+              </span>
+            <span v-else>-</span>
           </td>
+
           <td class="border px-4 py-2">
               <span
                   :class="project.is_active ? 'text-green-600' : 'text-gray-400'"
