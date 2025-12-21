@@ -1,12 +1,13 @@
 import axios, { type AxiosInstance } from 'axios'
 
 const request: AxiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
-  timeout: 10000,
-  headers: {
-    Accept: 'application/json',
-  },
+    baseURL: import.meta.env.VITE_API_BASE_URL + '/api',
+    timeout: 10000,
+    headers: {
+        Accept: 'application/json',
+    },
 })
+
 
 // 👉 GẮN TOKEN
 request.interceptors.request.use((config) => {

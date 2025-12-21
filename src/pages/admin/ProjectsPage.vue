@@ -32,10 +32,10 @@ onMounted(fetchProjects)
 </script>
 
 <template>
-  <div class="mb-4 text-sm text-red-600">
-    Debug permission project.update:
-    {{ auth.hasPermission('project.update') }}
-  </div>
+<!--  <div class="mb-4 text-sm text-red-600">-->
+<!--    Debug permission project.update:-->
+<!--    {{ auth.hasPermission('project.update') }}-->
+<!--  </div>-->
   <div>
     <!-- HEADER -->
     <div class="mb-6 flex items-center justify-between">
