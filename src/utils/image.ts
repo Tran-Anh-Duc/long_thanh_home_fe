@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export function getImageUrl(path?: string | null) {
     if (!path) {
