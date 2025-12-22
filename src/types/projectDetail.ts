@@ -15,3 +15,4 @@ export interface ProjectDetail {
     created_at: string | null
     updated_at: string | null
 }
+

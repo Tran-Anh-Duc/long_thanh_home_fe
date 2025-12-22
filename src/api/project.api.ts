@@ -6,8 +6,11 @@ export const getProjects = async (): Promise<Project[]> => {
     return res.data.data
 }
 
-export function getProject(id: number | string) {
-    return request.get(`/projects/${id}`)
+export const getProject = async (
+    id: number | string,
+): Promise<Project> => {
+    const res = await request.get(`/projects/${id}`)
+    return res.data.data
 }
 
 export function createProject(data: FormData) {

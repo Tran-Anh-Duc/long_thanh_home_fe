@@ -20,3 +20,9 @@ export interface Project {
     created_at: string
     updated_at: string
 }
+
+export interface ProjectCategory {
+    id: number
+    name: string
+    slug: string
+}

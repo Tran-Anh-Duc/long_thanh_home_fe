@@ -3,10 +3,16 @@ import request from './request'
 export interface News {
     id: number
     title: string
-    thumbnail: string | null
-    content: string
-    created_at?: string
+    slug: string
+    thumbnail?: string | null
+    excerpt?: string | null
+    published_at?: string | null
+    category?: {
+        id: number
+        name: string
+    } | null
 }
+
 
 export const getNews = async (): Promise<News[]> => {
     const res = await request.get('/news')
