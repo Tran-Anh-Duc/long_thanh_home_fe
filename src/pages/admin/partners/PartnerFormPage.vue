@@ -11,8 +11,17 @@ import {
 
 const route = useRoute()
 const router = useRouter()
-
+const logoFile = ref<File | null>(null)
+const logoPreview = ref('')
 const isEdit = Boolean(route.params.id)
+const onLogoChange = (e: Event) => {
+  const input = e.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (!file) return
+
+  logoFile.value = file
+  logoPreview.value = URL.createObjectURL(file)
+}
 
 /* ================= STATE ================= */
 const loading = ref(false)
@@ -138,15 +147,13 @@ onMounted(() => {
       <input
           type="file"
           accept="image/*"
-          @change="
-          e => {
-            const file = (e.target as HTMLInputElement).files?.[0]
-            if (file) {
-              form.logo = file
-              form.logo_preview = URL.createObjectURL(file)
-            }
-          }
-        "
+          @change="onLogoChange"
+      />
+
+      <img
+          v-if="logoPreview"
+          :src="logoPreview"
+          class="mt-2 h-24 rounded object-cover"
       />
 
       <!-- PREVIEW -->

@@ -1,5 +1,6 @@
 import request from './request'
 
+/* ================= LIST ================= */
 export interface News {
     id: number
     title: string
@@ -13,13 +14,23 @@ export interface News {
     } | null
 }
 
+/* ================= DETAIL (ADMIN / EDIT) ================= */
+export interface NewsDetail {
+    id: number
+    title: string
+    content: string
+    thumbnail?: string | null
+}
 
+/* ================= API ================= */
 export const getNews = async (): Promise<News[]> => {
     const res = await request.get('/news')
     return res.data.data
 }
 
-export const getNewsDetail = async (id: number | string): Promise<News> => {
+export const getNewsDetail = async (
+    id: number | string,
+): Promise<NewsDetail> => {
     const res = await request.get(`/news/${id}`)
     return res.data.data
 }

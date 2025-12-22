@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getImageUrl } from '@/utils/image'
 import { getNewsDetail } from '@/api/news.api'
 import type { News } from '@/types/news'
+import type { NewsDetail } from '@/api/news.api'
 
 const route = useRoute()
 const router = useRouter()
@@ -16,7 +17,7 @@ const newsId = computed(() => Number(route.params.id))
 const fetchData = async () => {
   loading.value = true
   try {
-    news.value = await getNewsDetail(newsId.value)
+    const news = ref<NewsDetail | null>(null)
   } finally {
     loading.value = false
   }

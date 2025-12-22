@@ -5,18 +5,28 @@ import {
   getNewsDetail,
   createNews,
   updateNews,
-  type News,
 } from '@/api/news.api'
 
+/* ================= TYPES (FORM RIÊNG) ================= */
+interface NewsForm {
+  id: number
+  title: string
+  content: string
+  thumbnail: string | null
+}
+
+/* ================= ROUTER ================= */
 const route = useRoute()
 const router = useRouter()
 
+/* ================= STATE ================= */
 const loading = ref(false)
 const saving = ref(false)
 
 const isEdit = computed(() => !!route.params.id)
 
-const form = ref<News>({
+/* ================= FORM ================= */
+const form = ref<NewsForm>({
   id: 0,
   title: '',
   content: '',
@@ -24,36 +34,49 @@ const form = ref<News>({
 })
 
 const thumbnailFile = ref<File | null>(null)
-const previewThumbnail = ref<string | null>(null)
+const previewThumbnail = ref<string>('')
 
+/* ================= FETCH DETAIL ================= */
 const fetchData = async () => {
   if (!isEdit.value) return
 
   loading.value = true
   try {
     const data = await getNewsDetail(route.params.id as string)
-    form.value = data
+
+    form.value.id = data.id
+    form.value.title = data.title
+    form.value.content = data.content ?? ''
+    form.value.thumbnail = data.thumbnail ?? null
+
     previewThumbnail.value = data.thumbnail
         ? `http://localhost:8000/storage/${data.thumbnail}`
-        : null
+        : ''
+  } catch (e) {
+    alert('Không tải được dữ liệu tin tức')
   } finally {
     loading.value = false
   }
 }
 
+/* ================= THUMBNAIL ================= */
 const onThumbnailChange = (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]
   if (!file) return
+
   thumbnailFile.value = file
-  previewThumbnail.value = URL.createObjectURL(file)
+  previewThumbnail.value = window.URL.createObjectURL(file)
 }
 
+/* ================= SAVE ================= */
 const onSave = async () => {
+  if (saving.value) return
+
   saving.value = true
   try {
     const fd = new FormData()
     fd.append('title', form.value.title)
-    fd.append('content', form.value.content)
+    fd.append('content', form.value.content) // luôn là string
 
     if (thumbnailFile.value) {
       fd.append('thumbnail', thumbnailFile.value)
@@ -68,6 +91,8 @@ const onSave = async () => {
     }
 
     router.push('/admin/news')
+  } catch (e) {
+    alert('Lưu dữ liệu thất bại')
   } finally {
     saving.value = false
   }
@@ -92,32 +117,41 @@ onMounted(fetchData)
       </button>
     </div>
 
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading" class="py-10 text-center">Loading...</div>
 
     <div
         v-else
         class="max-w-3xl space-y-4 rounded bg-white p-6 shadow"
     >
+      <!-- TITLE -->
       <div>
         <label class="mb-1 block text-sm font-medium">Title</label>
         <input
             v-model="form.title"
             class="w-full rounded border px-3 py-2"
+            placeholder="Nhập tiêu đề"
         />
       </div>
 
+      <!-- CONTENT -->
       <div>
         <label class="mb-1 block text-sm font-medium">Content</label>
         <textarea
             v-model="form.content"
             rows="8"
             class="w-full rounded border px-3 py-2"
+            placeholder="Nhập nội dung"
         />
       </div>
 
+      <!-- THUMBNAIL -->
       <div>
         <label class="mb-1 block text-sm font-medium">Thumbnail</label>
-        <input type="file" accept="image/*" @change="onThumbnailChange" />
+        <input
+            type="file"
+            accept="image/*"
+            @change="onThumbnailChange"
+        />
 
         <img
             v-if="previewThumbnail"
@@ -126,6 +160,7 @@ onMounted(fetchData)
         />
       </div>
 
+      <!-- ACTION -->
       <div class="flex justify-end gap-2 pt-4">
         <button
             class="rounded bg-gray-200 px-4 py-2"
@@ -135,7 +170,7 @@ onMounted(fetchData)
         </button>
 
         <button
-            class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-60"
             :disabled="saving"
             @click="onSave"
         >

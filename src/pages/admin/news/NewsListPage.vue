@@ -56,7 +56,7 @@ onMounted(fetchData)
           </td>
 
           <td class="border-b px-4 py-2 text-gray-500">
-            {{ item.created_at?.slice(0, 10) }}
+            {{ item.published_at?.slice(0, 10) || '-' }}
           </td>
 
           <td class="border-b px-4 py-2 text-right">
