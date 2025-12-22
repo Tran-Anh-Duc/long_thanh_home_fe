@@ -15,6 +15,9 @@ const fetchData = async () => {
   }
 }
 
+/**
+ * SEARCH CLIENT SIDE
+ */
 const filteredUsers = computed(() => {
   if (!search.value) return users.value
 
@@ -29,10 +32,9 @@ const filteredUsers = computed(() => {
 onMounted(fetchData)
 </script>
 
-
-
 <template>
   <div>
+    <!-- HEADER -->
     <div class="mb-6 flex items-center justify-between">
       <h1 class="text-2xl font-bold">Users</h1>
 
@@ -43,10 +45,12 @@ onMounted(fetchData)
       />
     </div>
 
+    <!-- LOADING -->
     <div v-if="loading" class="text-gray-400">
       Loading...
     </div>
 
+    <!-- TABLE -->
     <div v-else class="rounded bg-white shadow">
       <table class="min-w-full text-sm">
         <thead class="bg-gray-50">
@@ -88,4 +92,3 @@ onMounted(fetchData)
     </div>
   </div>
 </template>
-
