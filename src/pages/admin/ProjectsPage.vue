@@ -117,6 +117,12 @@ onMounted(fetchProjects)
             >
               🗑 Xoá
             </button>
+            <button
+                class="rounded bg-indigo-600 px-3 py-1 text-white hover:bg-indigo-700"
+                @click="router.push(`/admin/projects/${project.id}/details`)"
+            >
+              Details
+            </button>
           </td>
         </tr>
 
